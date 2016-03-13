@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         tasksListView = (ListView) findViewById(R.id.tasksListView);
 
         tasksDatabase = new TasksDatabase();
-        tasks = tasksDatabase.getCats();
+        tasks = tasksDatabase.getTasks();
 
         taskAdapter = new TaskAdapter(this, R.layout.task_template, tasks);
 
@@ -61,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == SelectedTaskActivity.TASK_DONE_RESULT) {
             if (requestCode == REQUEST_CODE) {
                 Toast.makeText(this, "Attempt to done item", Toast.LENGTH_SHORT).show();
-                taskAdapter.get
+                tasks.get(listItemPosition).setIsDone(true);
+                taskAdapter.notifyDataSetChanged();
             }
         }
         if (resultCode == SelectedTaskActivity.REMOVE_TASK_RESULT) {
             if (requestCode == REQUEST_CODE) {
                 Toast.makeText(this, "Attempt to remove item", Toast.LENGTH_SHORT).show();
+                tasksDatabase.removeTask(listItemPosition);
+                taskAdapter.notifyDataSetChanged();
             }
         }
         if (resultCode == SelectedTaskActivity.TASK_CHANGED_RESULT) {

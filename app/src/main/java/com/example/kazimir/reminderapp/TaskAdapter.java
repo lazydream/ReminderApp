@@ -1,6 +1,7 @@
 package com.example.kazimir.reminderapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,10 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         Task currentTask = tasks.get(position);
         taskTextView.setText(String.valueOf(position) + ") " + currentTask.getTask().toString());
+
+        if (currentTask.isDone() == true) {
+            taskTextView.setBackgroundColor(Color.GREEN);
+        }
 
         return templateView;
     }

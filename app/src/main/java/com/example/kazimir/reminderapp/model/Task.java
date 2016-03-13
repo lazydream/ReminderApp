@@ -6,11 +6,22 @@ package com.example.kazimir.reminderapp.model;
 public class Task {
     private final String task;
 
-    public Task(String task) {
+    private boolean isDone;
+
+    public Task(String task, boolean isDone) {
         this.task = task;
+        this.isDone = isDone;
     }
 
     public String getTask() {
         return task;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 }
