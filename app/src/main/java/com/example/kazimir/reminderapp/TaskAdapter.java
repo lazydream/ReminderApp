@@ -36,7 +36,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         TextView taskTextView = (TextView) templateView.findViewById(R.id.taskTextView);
 
         Task currentTask = tasks.get(position);
-        taskTextView.setText(String.valueOf(position) + ") " + currentTask.getTask().toString());
+        taskTextView.setText(String.valueOf(position + 1) + ") " + currentTask.getTask().toString());
 
         if (currentTask.isDone() == true) {
             taskTextView.setBackgroundColor(Color.GREEN);
