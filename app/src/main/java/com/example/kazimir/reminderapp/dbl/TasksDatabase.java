@@ -13,13 +13,6 @@ import java.util.List;
 public class TasksDatabase {
     List<Task> tasks = new ArrayList<>();
     public List<Task> getTasks() {
-
-        tasks.add(new Task("Сделать платформу", false));
-        tasks.add(new Task("Выгулять пса", false));
-        tasks.add(new Task("Поиграть в футбол", true));
-        tasks.add(new Task("Написать приложение-бомбу", false));
-        tasks.add(new Task("Поднять ранг в хартстоуне", false));
-
         return tasks;
     }
 
