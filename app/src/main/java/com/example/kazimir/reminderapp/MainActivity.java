@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kazimir.reminderapp.dbl.MyDBHelper;
-import com.example.kazimir.reminderapp.dbl.TasksDatabase;
 import com.example.kazimir.reminderapp.model.Task;
 
 import java.util.ArrayList;
@@ -26,13 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private MyDBHelper db;
     private SQLiteDatabase connection;
     private String noteText;
-    public TasksDatabase tasksDatabase;
     private List<Task> tasks;
-    private ListView tasksListView;
 
     public int listItemPosition;
     View selectedItem;
-    TaskAdapter taskAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
