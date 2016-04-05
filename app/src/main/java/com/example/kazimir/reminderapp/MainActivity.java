@@ -14,7 +14,9 @@ import android.widget.Toast;
 import com.example.kazimir.reminderapp.dbl.MyDBHelper;
 import com.example.kazimir.reminderapp.model.Task;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == SelectedTaskActivity.TASK_CHANGED_RESULT) {
             if (requestCode == REQUEST_CODE) {
                 Toast.makeText(this, "Attempt to change item", Toast.LENGTH_SHORT).show();
+
+                try {
+                    connection.execSQL("update Reminders\n" +
+                            "set NoteText = '" + data.getExtras().getString(SelectedTaskActivity.RESPONSE_KEY) +"'\n" +
+                            "where RID = " + tasks.get(listItemPosition).getId());
+                    readNotes();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (resultCode == SelectedTaskActivity.TASK_CHANGED_AND_DONE_RESULT) {
+            if (requestCode == REQUEST_CODE) {
+                try {
+                    connection.execSQL("update Reminders\n" +
+                            "set NoteText = '" + data.getExtras().getString(SelectedTaskActivity.RESPONSE_KEY) +"', IsDone=1\n" +
+                            "where RID = " + tasks.get(listItemPosition).getId());
+                    readNotes();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -91,8 +117,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     noteText = ((EditText) findViewById(R.id.et_note_text)).getText().toString();
-                    connection.execSQL("INSERT INTO Reminders(NoteText, Date) values('" + noteText + "', datetime())");
-                    readNotes();
+                    if (!noteText.contentEquals("")) {
+                        String sqlDate = "datetime()";
+                        String query = "INSERT INTO Reminders(NoteText, Date) values(?, ?)";
+                        connection.rawQuery(query, new String[] {noteText, sqlDate});
+                        //connection.execSQL("INSERT INTO Reminders(NoteText, Date) values('" + noteText + "', datetime())");
+                        readNotes();
+                        ((EditText) findViewById(R.id.et_note_text)).setText("");
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Please, enter your task before dending!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

@@ -15,6 +15,7 @@ public class SelectedTaskActivity extends AppCompatActivity {
     public static final int TASK_CHANGED_RESULT = 1;
     public static final int REMOVE_TASK_RESULT = 2;
     public static final int TASK_DONE_RESULT = 3;
+    public static final int TASK_CHANGED_AND_DONE_RESULT = 4;
 
     TextView selectedTaskTextView;
     EditText selectedActivityEditText;
@@ -48,7 +49,14 @@ public class SelectedTaskActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(TASK_DONE_RESULT);
+                Intent backIntent = new Intent();
+                if (!selectedActivityEditText.getText().toString().equals(selectedTask)) {
+                    backIntent.putExtra(RESPONSE_KEY, selectedActivityEditText.getText().toString());
+                    setResult(TASK_CHANGED_AND_DONE_RESULT, backIntent);
+                }
+                else{
+                    setResult(TASK_DONE_RESULT);
+                }
                 finish();
             }
         });
